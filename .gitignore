@@ -1,0 +1,13 @@
+# Ignore the compiled 'binaries' (The junk)
+/target/
+/out/
+
+# Ignore IntelliJ's personal configuration (The clutter)
+.idea/
+*.iml
+
+# Ignore your private database credentials (The diary)
+src/main/resources/application.properties
+
+# Ignore system-specific junk
+.DS_Store

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartStock | Login</title>
+    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+    <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: url('/images/bg.png') no-repeat center center fixed;
+          background-size: cover;
+          margin: 0;
+        }
+
+        .overlay {
+          background: rgba(255, 255, 255, 0.85);
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .card {
+          background: white;
+          padding: 40px;
+          border-radius: 10px;
+          box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+          width: 350px;
+          text-align: center;
+        }
+
+        .card img {
+          height: 70px;
+          margin-bottom: 15px;
+        }
+
+        h2 {
+          color: #2e7d32;
+          margin-bottom: 25px;
+        }
+
+        input[type="email"], input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          margin: 8px 0 16px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+
+        button {
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 6px;
+          cursor: pointer;
+          width: 100%;
+        }
+
+        button:hover {
+          background-color: #45a049;
+        }
+
+        p {
+          margin-top: 15px;
+          font-size: 14px;
+        }
+
+        a {
+          color: #2e7d32;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <div class="card">
+        <img src="/images/logo.png" alt="SmartStock">
+        <h2>Admin Login</h2>
+
+        <form method="post" th:action="@{/login}">
+            <div th:if="${error}" class="error-message" style="color: red; background-color: #ffe6e6; padding: 10px; border: 1px solid red; border-radius: 4px; margin-bottom: 15px;">
+                <span th:text="${error}">Invalid credentials! Try again.</span>
+            </div>
+            <input type="email" name="username" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Don’t have an account? <a href="/register">Register</a></p>
+    </div>
+</div>
+</body>
+</html>

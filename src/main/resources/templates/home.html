@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartStock | Home</title>
+    <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+    <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: url('/images/bg.png') no-repeat center center fixed;
+          background-size: cover;
+          margin: 0;
+          color: #333;
+          text-align: center;
+        }
+
+        .overlay {
+          background: rgba(255, 255, 255, 0.85);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+
+        img.logo {
+          height: 100px;
+          margin-bottom: 20px;
+        }
+
+        h1 {
+          color: #2e7d32;
+          font-size: 2.2rem;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 1.1rem;
+          color: #555;
+        }
+
+        .buttons {
+          margin-top: 30px;
+          display: flex;
+          gap: 20px;
+        }
+
+        .btn {
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 6px;
+          cursor: pointer;
+          text-decoration: none;
+          font-size: 16px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+          background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <img src="/images/logo.png" alt="SmartStock Logo" class="logo">
+    <h1>🌿 Welcome to SmartStock</h1>
+    <p>Efficient Warehouse & Product Management System </p>
+    <div class="buttons">
+        <a href="/login" class="btn">Login</a>
+        <a href="/register" class="btn">Register</a>
+    </div>
+</div>
+</body>
+</html>

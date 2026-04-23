@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartStock | Hire Munshi</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        .form-container { width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { color: #4CAF50; text-align: center; }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Hire New Munshi</h2>
+    <form th:action="@{/staff/add}" method="post" th:object="${staffDto}">
+        <input type="text" th:field="*{name}" placeholder="Munshi Name" required>
+        <input type="email" th:field="*{email}" placeholder="Munshi Email" required>
+        <input type="password" th:field="*{password}" placeholder="Login Password" required>
+
+        <label>Assign to Warehouse:</label>
+        <select name="warehouseId" required>
+            <option th:each="w : ${warehouses}" th:value="${w.id}" th:text="${w.name}"></option>
+        </select>
+
+        <button type="submit" class="btn">Register Munshi</button>
+    </form>
+</div>
+
+</body>
+</html>
