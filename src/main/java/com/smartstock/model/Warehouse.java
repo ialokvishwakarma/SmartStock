@@ -28,4 +28,8 @@ public class Warehouse {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
+
+    public Object getProducts() {
+        return null;
+    }
 }

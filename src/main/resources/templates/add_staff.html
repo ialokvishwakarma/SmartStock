@@ -15,10 +15,10 @@
 <body>
 
 <div class="form-container">
-    <h2>Hire New Munshi</h2>
+    <h2>Assign New Staff</h2>
     <form th:action="@{/staff/add}" method="post" th:object="${staffDto}">
-        <input type="text" th:field="*{name}" placeholder="Munshi Name" required>
-        <input type="email" th:field="*{email}" placeholder="Munshi Email" required>
+        <input type="text" th:field="*{name}" placeholder="Staff Name" required>
+        <input type="email" th:field="*{email}" placeholder="Staff Email" required>
         <input type="password" th:field="*{password}" placeholder="Login Password" required>
 
         <label>Assign to Warehouse:</label>
@@ -26,7 +26,7 @@
             <option th:each="w : ${warehouses}" th:value="${w.id}" th:text="${w.name}"></option>
         </select>
 
-        <button type="submit" class="btn">Register Munshi</button>
+        <button type="submit" class="btn">Register Staff</button>
     </form>
 </div>
 

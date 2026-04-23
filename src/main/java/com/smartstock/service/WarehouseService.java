@@ -31,4 +31,8 @@ public class WarehouseService {
     public void deleteWarehouse(Warehouse warehouse) {
         warehouseRepository.delete(warehouse);
     }
+
+    public Warehouse getWarehouseById(Long assignedWarehouseId) {
+        return warehouseRepository.findById(assignedWarehouseId).orElse(null);
+    }
 }

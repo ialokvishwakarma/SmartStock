@@ -22,9 +22,10 @@ public class SecurityConfig {
         http
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/home", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/register", "/login", "/home", "/css/**", "/images/**","/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/staff/add/**").hasAnyRole("OWNER", "ADMIN")
+                        .requestMatchers("/product/**").hasAnyRole("OWNER", "STAFF")
                         .requestMatchers("/staff/**").hasRole("STAFF")
                         // All other routes require the user to be logged in
                         .anyRequest().authenticated()
