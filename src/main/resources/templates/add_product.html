@@ -4,119 +4,271 @@
   <meta charset="UTF-8">
   <title>Add Product | SmartStock</title>
   <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --primary: #1b5e20;
+        --primary-mid: #2e7d32;
+        --primary-light: #43a047;
+        --primary-bright: #4CAF50;
+        --primary-pale: #e8f5e9;
+        --border: #e0e6e0;
+        --text-primary: #1a2e1a;
+        --text-secondary: #4a5568;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: url('/images/bg.png') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
+        font-family: 'DM Sans', sans-serif;
+        background: url('/images/bg.png') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0; padding: 0;
+        min-height: 100vh;
+    }
+
+    .page-wrap {
+        min-height: 100vh;
+        background: linear-gradient(135deg, rgba(27,94,32,0.72) 0%, rgba(0,0,0,0.45) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
     }
 
     .container {
-      width: 40%;
-      margin: 70px auto;
-      background: rgba(255, 255, 255, 0.93);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 500px;
+        background: #ffffff;
+        padding: 42px 44px 36px;
+        border-radius: 20px;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.16);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .container::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-bright), #00bfa5);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .form-header .icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        display: block;
     }
 
     h2 {
-      text-align: center;
-      color: #2e7d32;
-      margin-bottom: 25px;
+        font-family: 'DM Serif Display', serif;
+        color: var(--text-primary);
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-bottom: 4px;
+    }
+
+    .form-subtitle {
+        font-size: 0.83rem;
+        color: var(--text-secondary);
     }
 
     form {
-      display: flex;
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
     }
 
     label {
-      font-weight: 600;
-      margin: 8px 0 5px;
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 7px;
     }
 
     input, select {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      outline: none;
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-size: 0.93rem;
+        font-family: 'DM Sans', sans-serif;
+        color: var(--text-primary);
+        background: #fafafa;
+        transition: all 0.2s ease;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
     }
 
-    button {
-      margin-top: 20px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
+    input:focus, select:focus {
+        border-color: var(--primary-bright);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(76,175,80,0.12);
     }
 
-    button:hover {
-      background-color: #43a047;
+    input[readonly] {
+        background: #f0f4f0;
+        color: #888;
+        cursor: not-allowed;
     }
+
+    .help-text {
+        display: block;
+        font-size: 0.76rem;
+        color: #9cad9c;
+        margin-top: 5px;
+    }
+
+    .input-prefix-wrap {
+        position: relative;
+    }
+
+    .input-prefix-wrap .prefix {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        pointer-events: none;
+    }
+
+    .input-prefix-wrap input {
+        padding-left: 28px;
+    }
+
+    .select-wrap {
+        position: relative;
+    }
+
+    .select-wrap::after {
+        content: '▾';
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        pointer-events: none;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 13px;
+        background: linear-gradient(135deg, var(--primary-mid), var(--primary-light));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: 'DM Sans', sans-serif;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 14px rgba(46,125,50,0.35);
+        letter-spacing: 0.3px;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(46,125,50,0.45);
+    }
+
+    .divider { height: 1px; background: var(--border); margin: 22px 0 18px; }
 
     .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #2e7d32;
-      text-decoration: none;
+        display: block;
+        text-align: center;
+        color: var(--primary-mid);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: color 0.2s;
     }
 
-    .back-link:hover {
-      text-decoration: underline;
-    }
+    .back-link:hover { color: var(--primary); text-decoration: underline; }
   </style>
 </head>
 <body>
+<div class="page-wrap">
 <div class="container">
-  <h2>Add New Product</h2>
+  <div class="form-header">
+    <span class="icon">📦</span>
+    <h2>Add New Product</h2>
+    <p class="form-subtitle">Fill in the details to add a product to your inventory</p>
+  </div>
+
   <form th:action="@{/product/add/{id}(id=${warehouseId})}" method="post" th:object="${product}">
-    <label>SKU:</label>
-    <input type="text" th:field="*{sku}" required placeholder="Enter unique SKU">
-
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" required placeholder="Enter product name">
-
-    <label for="category">Category:</label>
-    <select id="category" th:field="*{category}" required>
-      <option value="">-- Select Category --</option>
-      <option value="Electronics">Electronics</option>
-      <option value="Clothing">Clothing & Apparel</option>
-      <option value="Food">Food & Beverages</option>
-      <option value="Books">Books & Media</option>
-      <option value="Home">Home & Garden</option>
-      <option value="Sports">Sports & Outdoors</option>
-      <option value="Health">Health & Beauty</option>
-      <option value="Toys">Toys & Games</option>
-      <option value="Automotive">Automotive</option>
-      <option value="Office">Office Supplies</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <label for="price">Price (₹):</label>
-    <div class="input-group">
-      <span class="currency-symbol">₹</span>
-      <input type="number" id="price" th:field="*{price}"
-             step="0.01" min="0" max="999999.99"
-             placeholder="0.00" required>
+    <div class="form-group">
+        <label>SKU</label>
+        <input type="text" th:field="*{sku}" required placeholder="e.g. PROD-001">
     </div>
-    <small class="help-text">Enter price per unit</small>
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" th:field="*{quantity}"
-           min="0" max="999999" step="1"
-           placeholder="0" required>
-    <small class="help-text">Number of units in stock</small>
+    <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" th:field="*{name}" required placeholder="Enter product name">
+    </div>
 
-    <button type="submit">Save Product</button>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <div class="select-wrap">
+            <select id="category" th:field="*{category}" required>
+                <option value="">-- Select Category --</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing & Apparel</option>
+                <option value="Food">Food & Beverages</option>
+                <option value="Books">Books & Media</option>
+                <option value="Home">Home & Garden</option>
+                <option value="Sports">Sports & Outdoors</option>
+                <option value="Health">Health & Beauty</option>
+                <option value="Toys">Toys & Games</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Office">Office Supplies</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price</label>
+        <div class="input-prefix-wrap">
+            <span class="prefix">₹</span>
+            <input type="number" id="price" th:field="*{price}"
+                   step="0.01" min="0" max="999999.99"
+                   placeholder="0.00" required>
+        </div>
+        <small class="help-text">Enter price per unit</small>
+    </div>
+
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" th:field="*{quantity}"
+               min="0" max="999999" step="1"
+               placeholder="0" required>
+        <small class="help-text">Number of units in stock</small>
+    </div>
+
+    <button type="submit" class="btn-submit">Save Product</button>
   </form>
-  <a th:href="@{/products/{id}(id=${warehouseId})}" class="back-link">Back to Products</a>
+
+  <div class="divider"></div>
+  <a th:href="@{/products/{id}(id=${warehouseId})}" class="back-link">← Back to Products</a>
+</div>
 </div>
 </body>
 </html>

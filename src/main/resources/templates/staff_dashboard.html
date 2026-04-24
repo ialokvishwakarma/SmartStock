@@ -4,31 +4,238 @@
     <meta charset="UTF-8">
     <title>SmartStock | Staff Dashboard</title>
     <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: url('/images/bg.png') no-repeat center center fixed; background-size: cover; margin: 0; padding: 0; }
-        header { background-color: #4CAF50; color: white; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; }
-        header img { height: 40px; margin-right: 10px; }
-        .logo { display: flex; align-items: center; font-size: 22px; font-weight: bold; }
-        .logout-btn { background-color: white; color: #4CAF50; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; }
-        .logout-btn:hover { background-color: #f0f0f0; }
-        .content { padding: 30px; background-color: rgba(255, 255, 255, 0.9); margin: 40px auto; width: 85%; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
-        h2 { color: #2e7d32; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: center; }
-        th { background-color: #4CAF50; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Action Buttons */
-        .action-btn { padding: 6px 10px; border: none; border-radius: 4px; color: white; cursor: pointer; text-decoration: none; }
-        .edit { background-color: #2196F3; }
-        .delete { background-color: #f44336; }
+        :root {
+            --primary: #1b5e20;
+            --primary-mid: #2e7d32;
+            --primary-light: #43a047;
+            --primary-bright: #4CAF50;
+            --primary-pale: #e8f5e9;
+            --border: #e0e6e0;
+            --text-primary: #1a2e1a;
+            --text-secondary: #4a5568;
+            --text-muted: #9cad9c;
+            --danger: #c62828;
+            --info: #1565c0;
+            --teal: #00695c;
+        }
 
-        /* Add Button */
-        .add-btn { background-color: #4CAF50; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-weight: bold; }
-        .add-btn:hover { background-color: #45a049; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: url('/images/bg.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-        .error-panel { text-align: center; font-weight: bold; color: #d32f2f; margin-top: 20px; padding: 20px; border: 1px solid #d32f2f; border-radius: 5px; }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%);
+            color: white;
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 12px rgba(27,94,32,0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header img { height: 34px; margin-right: 10px; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .logo-sub {
+            font-size: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            opacity: 0.75;
+            font-weight: 300;
+            margin-left: 8px;
+            padding-left: 8px;
+            border-left: 1px solid rgba(255,255,255,0.35);
+        }
+
         .header-actions { display: flex; align-items: center; gap: 10px; }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 7px 18px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.87rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+        .content {
+            padding: 36px;
+            background: rgba(255,255,255,0.95);
+            margin: 36px auto;
+            width: 88%;
+            max-width: 1100px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        .welcome-row {
+            margin-bottom: 28px;
+        }
+
+        .welcome-row h2 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--text-primary);
+            font-size: 1.7rem;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .welcome-row p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .alert {
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .alert-success { background: #e8f5e9; color: var(--primary); border: 1px solid #c8e6c9; }
+        .alert-error { background: #ffebee; color: var(--danger); border: 1px solid #ffcdd2; }
+
+        .inventory-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .inventory-header h3 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+            font-weight: 400;
+        }
+
+        .inventory-header h3 span {
+            color: var(--primary-mid);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary-mid), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(46,125,50,0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(46,125,50,0.4);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        table td {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid #f0f4f0;
+        }
+
+        table tr:last-child td { border-bottom: none; }
+        table tr:hover td { background: #f7fbf7; }
+
+        .action-btn {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            margin: 0 2px;
+        }
+
+        .edit { background: var(--info); }
+        .edit:hover { background: #0d47a1; }
+
+        .delete { background: var(--danger); }
+        .delete:hover { background: #b71c1c; }
+
+        .error-panel {
+            text-align: center;
+            padding: 40px 20px;
+            border: 2px dashed #ffcdd2;
+            border-radius: 14px;
+            background: #fff5f5;
+        }
+
+        .error-panel .error-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+        .error-panel h3 {
+            color: var(--danger);
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .error-panel p {
+            color: #c62828aa;
+            font-size: 0.88rem;
+            max-width: 420px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +243,8 @@
 <header>
     <div class="logo">
         <img src="/images/logo.png" alt="SmartStock">
-        SmartStock Staff Panel
+        SmartStock
+        <span class="logo-sub">Staff Panel</span>
     </div>
     <div class="header-actions">
         <form th:action="@{/logout}" method="post" style="margin: 0;">
@@ -46,50 +254,51 @@
 </header>
 
 <div class="content">
-    <h2>Welcome, <span th:text="${userName}">Staff Member</span></h2>
-    <p>Manage your assigned warehouse inventory and record daily stock movements.</p>
+    <div class="welcome-row">
+        <h2>Welcome, <span th:text="${userName}">Staff Member</span></h2>
+        <p>Manage your assigned warehouse inventory and record daily stock movements.</p>
+    </div>
 
-    <div th:if="${success}" th:text="${success}" style="color: green; font-weight: bold; margin-bottom: 10px;"></div>
-    <div th:if="${error}" th:text="${error}" style="color: red; font-weight: bold; margin-bottom: 10px;"></div>
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert alert-error" th:if="${error}" th:text="${error}"></div>
 
     <div th:if="${warehouse != null}">
-        <h3 style="color: #2e7d32;">Inventory for: <span th:text="${warehouse.name}"></span></h3>
+        <div class="inventory-header">
+            <h3>Inventory — <span th:text="${warehouse.name}"></span></h3>
+            <a th:href="@{'/product/add/' + ${warehouse.id}}" class="add-btn">＋ Add New Product</a>
+        </div>
 
-        <a th:href="@{'/product/add/' + ${warehouse.id}}">
-            <button class="add-btn">+ Add New Product</button>
-        </a>
-
-        <table>
-            <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>SKU</th>
-                <th>Price</th>
-                <th>Current Stock</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="p : ${products}">
-                <td th:text="${p.name}"></td>
-                <td th:text="${p.sku}"></td>
-                <td th:text="${p.price}"></td>
-                <td th:text="${p.quantity}"></td>
-                <td>
-                    <a th:href="@{'/product/edit/' + ${p.id}}">
-                        <button class="action-btn edit">Update</button>
-                    </a>
-                    <a th:href="@{'/product/delete/' + ${p.id}}" onclick="return confirm('Delete this product?');">
-                        <button class="action-btn delete">Delete</button>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Current Stock</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p : ${products}">
+                    <td style="font-weight:600;" th:text="${p.name}"></td>
+                    <td style="color:#4a5568;font-size:0.85rem;" th:text="${p.sku}"></td>
+                    <td th:text="${p.price}"></td>
+                    <td th:text="${p.quantity}"></td>
+                    <td>
+                        <a th:href="@{'/product/edit/' + ${p.id}}" class="action-btn edit">Update</a>
+                        <a th:href="@{'/product/delete/' + ${p.id}}" onclick="return confirm('Delete this product?');" class="action-btn delete">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div th:if="${warehouse == null}" class="error-panel">
-        You have not been assigned to a warehouse yet. Please contact your Owner/Administrator to update your account configuration.
+        <div class="error-icon">🏗️</div>
+        <h3>No Warehouse Assigned</h3>
+        <p>You have not been assigned to a warehouse yet. Please contact your Owner or Administrator to update your account configuration.</p>
     </div>
 </div>
 

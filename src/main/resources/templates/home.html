@@ -4,141 +4,237 @@
     <meta charset="UTF-8">
     <title>SmartStock | Home</title>
     <link rel="icon" type="image/png" th:href="@{/images/favicon.png}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #1b5e20;
+            --primary-mid: #2e7d32;
+            --primary-light: #43a047;
+            --primary-bright: #4CAF50;
+            --primary-pale: #e8f5e9;
+            --surface: #ffffff;
+            --text-primary: #1a2e1a;
+            --text-secondary: #4a5568;
+        }
+
         body {
-          font-family: 'Segoe UI', sans-serif;
-         background: url('/images/bg.png') no-repeat center center fixed;
-          background-size: cover;
-          margin: 0;
-          color: #333;
-          text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            background: url('/images/bg.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            color: #333;
         }
 
         .overlay {
-          background: rgba(255, 255, 255, 0.85);
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 40px 20px;
+            background: linear-gradient(160deg, rgba(27,94,32,0.88) 0%, rgba(0,77,64,0.75) 60%, rgba(0,0,0,0.6) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px 80px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            max-width: 680px;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         img.logo {
-          height: 100px;
-          margin-bottom: 20px;
+            height: 90px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
         }
 
         h1 {
-          color: #2e7d32;
-          font-size: 2.2rem;
-          margin-bottom: 10px;
+            font-family: 'DM Serif Display', serif;
+            color: #ffffff;
+            font-size: 3rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
 
-        p {
-          font-size: 1.1rem;
-          color: #555;
-          max-width: 600px;
+        h1 em {
+            font-style: italic;
+            color: #a5d6a7;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.82);
+            line-height: 1.7;
+            max-width: 540px;
+            margin: 0 auto 36px;
+            font-weight: 300;
         }
 
         .buttons {
-          margin-top: 30px;
-          display: flex;
-          gap: 20px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-          background-color: #4CAF50;
-          color: white;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 6px;
-          cursor: pointer;
-          text-decoration: none;
-          font-size: 16px;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            padding: 13px 32px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
         }
 
-        .btn:hover {
-          background-color: #45a049;
+        .btn-primary {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
+        .btn-primary:hover {
+            background: var(--primary-pale);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+        }
 
+        .btn-outline {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255,255,255,0.6);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.9);
+            transform: translateY(-2px);
+        }
+
+        /* Divider */
+        .section-divider {
+            width: 60px;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            margin: 60px auto 50px;
+        }
+
+        /* Cards */
         .cards {
-  margin-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1100px;
-}
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1080px;
+            width: 100%;
+            animation: fadeUp 0.9s ease 0.2s both;
+        }
+
+        @media (max-width: 900px) {
+            .cards { grid-template-columns: repeat(2, 1fr); }
+            h1 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 560px) {
+            .cards { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
 
         .card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  text-align: left;
-}
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 28px 24px;
+            border-radius: 16px;
+            text-align: left;
+            transition: all 0.25s ease;
+        }
+
+        .card:hover {
+            background: rgba(255,255,255,0.16);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
         .card h3 {
-          color: #2e7d32;
-          margin-bottom: 10px;
+            font-family: 'DM Serif Display', serif;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 400;
+            margin-bottom: 10px;
         }
 
         .card p {
-          font-size: 0.95rem;
-          color: #555;
+            font-size: 0.87rem;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
         }
     </style>
 </head>
 <body>
 <div class="overlay">
-    <img src="/images/logo.png" alt="SmartStock Logo" class="logo">
-
-    <h1>🌿 Welcome to SmartStock</h1>
-    <p>
-        SmartStock is a simple and efficient warehouse & product management system
-        designed especially for small and growing businesses.
-    </p>
-
-    <div class="buttons">
-        <a href="/login" class="btn">Login</a>
-        <a href="/register" class="btn">Register</a>
+    <div class="hero">
+        <img src="/images/logo.png" alt="SmartStock Logo" class="logo">
+        <h1>Smart inventory<br>for <em>growing businesses</em></h1>
+        <p>
+            SmartStock is a clean, efficient warehouse and product management system
+            built for small businesses that mean business.
+        </p>
+        <div class="buttons">
+            <a href="/login" class="btn btn-primary">Sign In</a>
+            <a href="/register" class="btn btn-outline">Create Account</a>
+        </div>
     </div>
 
-    <!-- NEW INFO CARDS -->
+    <div class="section-divider"></div>
+
     <div class="cards">
         <div class="card">
+            <span class="card-icon">📦</span>
             <h3>What SmartStock Does</h3>
-            <p>
-                SmartStock helps you manage your inventory, track products,
-                monitor stock levels, and organize warehouse operations—all in one place.
-            </p>
+            <p>Manage inventory, track products, monitor stock levels, and organize warehouse operations — all in one place.</p>
         </div>
-
         <div class="card">
+            <span class="card-icon">🏪</span>
             <h3>Who It's For</h3>
-            <p>
-                Built for small and lower-tier businesses, shop owners, and startups
-                who need a simple yet powerful system without complex setups.
-            </p>
+            <p>Built for shop owners, startups, and lower-tier businesses who need a powerful system without complex setups.</p>
         </div>
-
         <div class="card">
+            <span class="card-icon">✨</span>
             <h3>Key Features</h3>
-            <p>
-                Add and manage products, track stock changes, get alerts for low inventory,
-                and maintain records with ease.
-            </p>
+            <p>Add and manage products, track stock changes, get alerts for low inventory, and maintain records effortlessly.</p>
         </div>
-
         <div class="card">
-            <h3>Why Choose SmartStock</h3>
-            <p>
-                Easy to use, lightweight, and designed to save time so you can focus
-                on growing your business instead of managing spreadsheets.
-            </p>
+            <span class="card-icon">🚀</span>
+            <h3>Why SmartStock</h3>
+            <p>Easy to use, lightweight, and designed to save time so you can focus on growing your business.</p>
         </div>
     </div>
 
+    <p class="footer">© 2025 SmartStock · All rights reserved</p>
 </div>
 </body>
 </html>
