@@ -24,7 +24,7 @@ public class Warehouse {
 
     private String type;
 
-    // Each warehouse belongs to a single admin (User)
+    // Each warehouse belongs to a single owner (user)
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;

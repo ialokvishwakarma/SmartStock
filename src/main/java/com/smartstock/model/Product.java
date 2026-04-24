@@ -29,7 +29,7 @@ public class Product {
     private Double price;
     private String category;
 
-    // Many products belong to one warehouse
+    // many products belong to one warehouse
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;

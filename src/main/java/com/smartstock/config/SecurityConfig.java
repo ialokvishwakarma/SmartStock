@@ -27,18 +27,17 @@ public class SecurityConfig {
                         .requestMatchers("/staff/add/**").hasAnyRole("OWNER", "ADMIN")
                         .requestMatchers("/product/**").hasAnyRole("OWNER", "STAFF")
                         .requestMatchers("/staff/**").hasRole("STAFF")
-                        // All other routes require the user to be logged in
                         .anyRequest().authenticated()
                 )
-                // 2. Form Login Configuration
+                // handle login forms
                 .formLogin(form -> form
-                        .loginPage("/login") // Use your custom login HTML
-                        .loginProcessingUrl("/login") // Spring intercepts the POST request here
-                        .successHandler(successHandler) // Use our custom router
-                        .failureUrl("/login?error=true") // Send back on failure
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successHandler(successHandler)
+                        .failureUrl("/login?error=true") // failure feature redirect to login page if any error
                         .permitAll()
                 )
-                // 3. Logout Configuration
+                // handles secure logout and redirection
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/home")

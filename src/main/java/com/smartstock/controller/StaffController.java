@@ -28,7 +28,7 @@ public class StaffController {
         UserResponseDTO ownerDto = (UserResponseDTO) session.getAttribute("user");
         if (ownerDto == null) return "redirect:/login";
 
-        // Get the Owner's warehouses so they can pick one for the Munshi
+        // get the list of warehouse for assigning any one to the staff
         User owner = userService.findById(ownerDto.getId());
         List<Warehouse> warehouses = warehouseService.getWarehousesByOwner(owner);
 
@@ -41,6 +41,6 @@ public class StaffController {
     public String registerStaff(@ModelAttribute UserRegistrationDTO staffDto,
                                 @RequestParam Long warehouseId) {
         userService.createStaff(staffDto, warehouseId);
-        return "redirect:/dashboard"; // Back to Owner dashboard
+        return "redirect:/dashboard"; //redirects to owner dashboard after creation of staff
     }
 }

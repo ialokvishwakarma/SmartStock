@@ -23,7 +23,7 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        model.addAttribute("user", new UserRegistrationDTO()); // New way
+        model.addAttribute("user", new UserRegistrationDTO());
         return "register";
     }
 
@@ -45,6 +45,7 @@ public class AuthController {
         return "login";
     }
 
+    // this code is now handles by security config
 //    @PostMapping("/login")
 //    public String loginUser(@ModelAttribute("user") UserRegistrationDTO loginDto, HttpSession session, Model model) {
 //        UserResponseDTO loggedInUser = userService.login(loginDto.getEmail(),loginDto.getPassword());

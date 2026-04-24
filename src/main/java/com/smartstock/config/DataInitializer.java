@@ -22,10 +22,10 @@ public class DataInitializer implements CommandLineRunner {
             User admin = new User();
             admin.setName("System Admin");
             admin.setEmail("admin@smartstock.com");
-            admin.setPassword(passwordEncoder.encode("Admin123")); // Securely hashed
+            admin.setPassword(passwordEncoder.encode("Admin123")); //password will store in hashed
             admin.setRole("ADMIN");
             userRepository.save(admin);
-            System.out.println("✅ Global Admin seeded successfully.");
+            System.out.println("Global Admin saved successfully.");
         }
     }
 }

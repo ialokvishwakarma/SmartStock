@@ -8,6 +8,6 @@ public class UserRegistrationDTO {
     private String email;
     private String password;
 
-    // for Role based
+    // for role based
     private String role;
 }

@@ -24,23 +24,24 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        // 1. Get the email of the person who just logged in
+        // fetch the email of the person who login the common login page
         String email = authentication.getName();
 
-        // 2. Fetch your DTO and put it in the session for your existing Controllers
+
+        // create dto data and put in the session for controllers
         UserResponseDTO userDto = userService.findByEmailDTO(email);
         request.getSession().setAttribute("user", userDto);
 
-        // 3. Find out their role
+        // find out their assigned role
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-        // 4. Redirect based on the Munshi hierarchy
+        // handles where to redirect acc. to roles
         if (role.equals("ROLE_ADMIN")) {
-            response.sendRedirect("/admin/dashboard");
+            response.sendRedirect("/admin/dashboard");//admin
         } else if (role.equals("ROLE_STAFF")) {
-            response.sendRedirect("/staff/dashboard");
+            response.sendRedirect("/staff/dashboard");//staff
         } else {
-            response.sendRedirect("/dashboard"); // Owner dashboard
+            response.sendRedirect("/dashboard"); //warehouse owner
         }
     }
 }

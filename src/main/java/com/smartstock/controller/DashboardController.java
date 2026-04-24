@@ -43,7 +43,7 @@ public class DashboardController {
         UserResponseDTO user = getSessionUser(session);
         if (user == null) return "redirect:/login";
 
-        // Admin needs to see all Owners and Warehouses
+        //Admin can see all the warehouses and owners on Admin Dashboard
         model.addAttribute("allOwners", userRepository.findByRole("OWNER"));
         model.addAttribute("allWarehouses", warehouseRepository.findAll());
         model.addAttribute("userName", user.getName());
@@ -63,7 +63,7 @@ public class DashboardController {
             Warehouse warehouse = warehouseService.getWarehouseById(realUser.getAssignedWarehouseId());
             model.addAttribute("warehouse", warehouse);
 
-            // THE FIX: Fetch products explicitly from the database using ProductService
+            //Used to fetch the product lists for any warehouse assigned to staff
             List<Product> products = productService.getProductsByWarehouse(warehouse);
             model.addAttribute("products", products);
         }

@@ -36,8 +36,8 @@ public class ProductController {
         return (dto != null) ? userService.findById(dto.getId()) : null;
     }
 
-    // --- SECURITY HELPER METHODS ---
 
+    // method to check the role of the person trying of product operations
     private boolean hasAccessToWarehouse(User user, Long targetWarehouseId) {
         if (user == null) return false;
         if ("STAFF".equals(user.getRole())) {
@@ -56,8 +56,8 @@ public class ProductController {
         return "redirect:/products/" + warehouseId;
     }
 
-    // --- CONTROLLER MAPPINGS ---
 
+    //controllers
     @GetMapping("/products/{warehouseId}")
     public String listProducts(@PathVariable Long warehouseId, Model model, HttpSession session) {
         UserResponseDTO userDto = getSessionUser(session);

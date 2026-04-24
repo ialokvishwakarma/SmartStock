@@ -57,15 +57,11 @@ public class UserService {
     }
 
     public UserResponseDTO findByEmailDTO(String email) {
-        // 1. Ask the database for the real Entity
         Optional<User> userOpt = userRepository.findByEmail(email);
 
-        // 2. If found, use ModelMapper to safely convert it to the DTO
         if (userOpt.isPresent()) {
             return modelMapper.map(userOpt.get(), UserResponseDTO.class);
         }
-
-        // 3. Fallback (Though if they just logged in, this shouldn't happen)
         return null;
     }
 
@@ -73,7 +69,7 @@ public class UserService {
         User staff = new User();
         staff.setName(staffDto.getName());
         staff.setEmail(staffDto.getEmail());
-        // Hash the password for the Munshi
+        // hash the password for the staff
         staff.setPassword(passwordEncoder.encode(staffDto.getPassword()));
 
         staff.setRole("STAFF");
