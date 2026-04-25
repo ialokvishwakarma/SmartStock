@@ -2,7 +2,7 @@
 
 ## Description
 
-A web-based inventory and warehouse management system built using Java and SpringBoot with server-side rendering UI using Thymeleaf. The project is built to manage warehouse, stock, and operations efficiently and also provides a dynamic UI for user experience. The endpoints are secure with Role-Based Access implemented using Spring Security.
+A web-based inventory and warehouse management system built using Java and SpringBoot with server-side rendering UI using Thymeleaf. It enables efficient management of warehouses, stock, and operations with secure role-based access using Spring Security.
 
 ## Tech Stack
 
@@ -17,7 +17,7 @@ A web-based inventory and warehouse management system built using Java and Sprin
 * Dynamic web pages using Thymeleaf
 * Backend REST and secure endpoints
 * Admin can see all the owners and their warehouses
-* Owner can manages their warehouses 
+* Owner can manage their warehouses 
 * Staff can manage the products of their assigned warehouse
 
 ## UI Pages (Thymeleaf Views)
@@ -32,12 +32,12 @@ A web-based inventory and warehouse management system built using Java and Sprin
 ### Auth
 
 * POST /register
-* POST login
+* POST /login
 
 ### Other Functionalities
 
-* GET /warehouse/warehouse_id
-* GET /products/product_id
+* GET /warehouse/{id}
+* GET /products/{id}
 * POST /warehouse/add
 * POST /product/add
 
@@ -47,7 +47,7 @@ A web-based inventory and warehouse management system built using Java and Sprin
 
 Request:
 {
-"email": "[test@gmail.com](mailto:test@gmail.com)",
+"email": "test@gmail.com",
 "password": "123456"
 }
 
@@ -62,24 +62,24 @@ Response:
 2. Open in IDE (IntelliJ / Eclipse)
 3. Configure database in application.properties
 4. Run the Spring Boot application
-5. Open browser at http://localhost:8080
+5. Visit: http://localhost:8080
 
-##  Project Structure
-* securityconfig/ → Handles Spring Security Configuration
+## Project Structure
+* securityconfig/ → Spring Security configuration
 * controller/ → Handles HTTP requests
 * service/ → Business logic
 * repository/ → Database access
-* model/ → Entities
-* dto/ → Data Transfer Objects for Models
-* templates/ → Thymeleaf HTML files
-* static/ → Images
+* model/ → Entity classes
+* dto/ → Data Transfer Objects
+* templates/ → Thymeleaf ,Html
+* static/ →  images, assets
 
 ## Future Improvements
 
 * Improve UI design
 * Add more validations
-* Implement caching
-* Enhance security
+* Implement caching (Redis)
+* Enhance security features
 
 ##  Author
 
