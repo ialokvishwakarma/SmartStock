@@ -10,7 +10,7 @@ A web-based inventory and warehouse management system built using Java and Sprin
 * Frontend: HTML, CSS, Thymeleaf
 * Database: MySQL, Spring Data JPA
 * Tools: Postman, Maven, Intellij
-* 
+  
 ## Features
 
 * User registration and login
