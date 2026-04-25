@@ -83,5 +83,5 @@ Response:
 
 ##  Author
 
-Alok Vishwakarma 
-GitHub: github.com/ialokvishwakarma
+Alok Vishwakarma<br>
+GitHub: https://github.com/ialokvishwakarma
