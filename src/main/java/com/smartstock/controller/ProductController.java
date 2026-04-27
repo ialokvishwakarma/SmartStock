@@ -163,4 +163,28 @@ public class ProductController {
 
         return getRedirectRoute(realUser, warehouseId);
     }
+
+    // For stock in and stock out
+    @PostMapping("/product/stock-in/{id}")
+    public String stockIn(@PathVariable Long id,@RequestParam("quantity") int quantity,
+                          RedirectAttributes redAtt){
+        try{
+            productService.stockIn(id,quantity);
+            redAtt.addFlashAttribute("success", "Stock added successfully");
+        }catch(Exception e){
+            redAtt.addFlashAttribute("error","Stock not added due to any error"+e.getMessage());
+        }
+        return "redirect:/staff/dashboard";
+    }
+
+    @PostMapping("/product/stock-out/{id}")
+    public String stockOut(@PathVariable Long id, @RequestParam("quantity") int quantity, RedirectAttributes redAtt){
+        try{
+            productService.stockOut(id,quantity);
+            redAtt.addFlashAttribute("success", "Stock removed successfully");
+        }catch(Exception e){
+            redAtt.addFlashAttribute("error","Stock not removed due to any error"+e.getMessage());
+        }
+        return "redirect:/staff/dashboard";
+    }
 }

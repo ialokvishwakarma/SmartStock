@@ -33,4 +33,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
+
+    @Column(name = "min_stock_level")
+    private int minStockLevel = 5; //minimum stock threshold value
+
+
+
 }

@@ -3,6 +3,7 @@ package com.smartstock.service;
 import com.smartstock.model.Product;
 import com.smartstock.model.Warehouse;
 import com.smartstock.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -33,5 +34,33 @@ public class ProductService {
 
     public boolean isSkuExists(String sku) {
         return productRepository.findBySku(sku).isPresent();
+    }
+
+    @Transactional
+    public void stockIn(Long id, int amoount) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product not found"));
+        product.setQuantity(product.getQuantity()+amoount);
+        productRepository.save(product);
+    }
+
+    public void stockOut(Long id, int amount) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if(product.getQuantity()<amount){
+            throw new RuntimeException("Insufficient stock! Available: " + product.getQuantity());
+        }
+
+        product.setQuantity(product.getQuantity() - amount);
+        productRepository.save(product);
+
+        // low stock alert notification through email
+        if (product.getQuantity() <= product.getMinStockLevel()) {
+            triggerLowStockNotification(product);
+        }
+    }
+
+    private void triggerLowStockNotification(Product product) {
+        //email notification
     }
 }

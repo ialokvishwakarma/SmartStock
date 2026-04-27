@@ -186,6 +186,7 @@
             font-size: 0.9rem;
             color: var(--text-primary);
             border-bottom: 1px solid #f0f4f0;
+            vertical-align: middle;
         }
 
         table tr:last-child td { border-bottom: none; }
@@ -206,6 +207,31 @@
             margin: 0 2px;
         }
 
+        .stock-input {
+            width: 55px;
+            padding: 6px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .stock-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .stock-btn:active { transform: scale(0.95); }
+        .btn-plus { background: var(--primary-bright); }
+        .btn-minus { background: var(--danger); }
+
         .edit { background: var(--info); }
         .edit:hover { background: #0d47a1; }
 
@@ -219,8 +245,6 @@
             border-radius: 14px;
             background: #fff5f5;
         }
-
-        .error-panel .error-icon { font-size: 2.5rem; margin-bottom: 12px; }
 
         .error-panel h3 {
             color: var(--danger);
@@ -276,7 +300,8 @@
                     <th>SKU</th>
                     <th>Price</th>
                     <th>Current Stock</th>
-                    <th>Actions</th>
+                    <th style="text-align: center;">Stock Actions</th>
+                    <th>Management</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -284,9 +309,26 @@
                     <td style="font-weight:600;" th:text="${p.name}"></td>
                     <td style="color:#4a5568;font-size:0.85rem;" th:text="${p.sku}"></td>
                     <td th:text="${p.price}"></td>
-                    <td th:text="${p.quantity}"></td>
+                    <td style="font-weight: 600;"
+                        th:text="${p.quantity}"
+                        th:styleappend="${p.quantity <= p.minStockLevel} ? 'color:var(--danger);' : 'color:var(--primary-mid);'"></td>
+
+                    <td style="text-align: center; min-width: 240px;">
+                        <div style="display: flex; gap: 12px; justify-content: center; align-items: center;">
+                            <form th:action="@{'/product/stock-in/' + ${p.id}}" method="post" style="display: flex; gap: 4px; align-items: center;">
+                                <input type="number" name="quantity" min="1" value="1" class="stock-input">
+                                <button type="submit" class="stock-btn btn-plus" title="Add Stock">+</button>
+                            </form>
+
+                            <form th:action="@{'/product/stock-out/' + ${p.id}}" method="post" style="display: flex; gap: 4px; align-items: center;">
+                                <input type="number" name="quantity" min="1" value="1" class="stock-input">
+                                <button type="submit" class="stock-btn btn-minus" title="Remove Stock">−</button>
+                            </form>
+                        </div>
+                    </td>
+
                     <td>
-                        <a th:href="@{'/product/edit/' + ${p.id}}" class="action-btn edit">Update</a>
+                        <a th:href="@{'/product/edit/' + ${p.id}}" class="action-btn edit">Edit</a>
                         <a th:href="@{'/product/delete/' + ${p.id}}" onclick="return confirm('Delete this product?');" class="action-btn delete">Delete</a>
                     </td>
                 </tr>
@@ -296,7 +338,6 @@
     </div>
 
     <div th:if="${warehouse == null}" class="error-panel">
-
         <h3>No Warehouse Assigned</h3>
         <p>You have not been assigned to a warehouse yet. Please contact your Owner or Administrator to update your account configuration.</p>
     </div>
