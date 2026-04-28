@@ -3,6 +3,7 @@ package com.smartstock.service;
 import com.smartstock.model.Product;
 import com.smartstock.model.Warehouse;
 import com.smartstock.repository.ProductRepository;
+import com.smartstock.repository.WarehouseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,12 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private WarehouseRepository warehouseRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public List<Product> getProductsByWarehouse(Warehouse warehouse) {
         return productRepository.findByWarehouse(warehouse);
@@ -56,11 +63,10 @@ public class ProductService {
 
         // low stock alert notification through email
         if (product.getQuantity() <= product.getMinStockLevel()) {
-            triggerLowStockNotification(product);
+            String ownerEmail = product.getWarehouse().getOwner().getEmail();
+            emailService.sendLowStockAlert(ownerEmail,product.getName(), product.getQuantity(),product.getWarehouse().getName());
         }
     }
 
-    private void triggerLowStockNotification(Product product) {
-        //email notification
-    }
+
 }

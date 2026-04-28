@@ -24,7 +24,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
-        // fetch the email of the person who login the common login page
+        // fetch the email of the person who login throghg the common login page
         String email = authentication.getName();
 
 
